@@ -1,12 +1,16 @@
-# CN-TC4 — Integração Numérica
+# CN-TC4 — Cálculo Numérico
 
-Trabalho de Cálculo Numérico (UNIFESP) sobre **integração numérica**: implementação das
-regras do **trapézio** e de **Simpson 1/3** (versões simples e compostas) e das respectivas
-**cotas de erro**, usando entrada simbólica com SymPy.
+Trabalho de Cálculo Numérico (UNIFESP) dividido em duas partes, cada uma em um
+notebook [marimo](https://marimo.io/):
 
-O código está em um notebook [marimo](https://marimo.io/) (`tc4_p1.py`).
+- **`tc4_p1.py` — Integração numérica:** regras do **trapézio** e de **Simpson 1/3**
+  (versões simples e compostas) e respectivas **cotas de erro**, com entrada simbólica
+  via SymPy.
+- **`tc4_p2.py` — Equações diferenciais ordinárias:** resolução do problema da "hora da
+  morte" (lei do resfriamento de Newton) pelos métodos de **Euler** e **Runge-Kutta de
+  4ª ordem (RK4)**.
 
-## Conteúdo
+## Parte 1 — Integração numérica (`tc4_p1.py`)
 
 | Função | Descrição |
 | --- | --- |
@@ -22,11 +26,25 @@ As funções que recebem `expr` esperam uma **expressão SymPy** na variável `x
 uma função NumPy via `sympy.lambdify`, servindo como fonte única para o cálculo numérico
 e para as derivadas usadas nas cotas de erro.
 
+## Parte 2 — Equações diferenciais ordinárias (`tc4_p2.py`)
+
+Estima o horário de um óbito a partir da lei do resfriamento de Newton, resolvendo a EDO
+numericamente e comparando os métodos para diferentes passos `h`.
+
+| Função | Descrição |
+| --- | --- |
+| `euler(f, t0, y0, h, n)` | Método de Euler para resolver uma EDO de primeira ordem. |
+| `rk4(f, t0, y0, h, n)` | Método de Runge-Kutta de 4ª ordem. |
+| `hora_morte(k, T)` | Converte a temperatura estimada no horário correspondente do óbito. |
+
+Esta parte usa `pandas` para apresentar, em tabela, a convergência do erro conforme o
+passo `h` diminui.
+
 ## Requisitos
 
 - Python 3.12+
-- Dependências em [`requirements.txt`](requirements.txt) — principais: `numpy`, `sympy`
-  e `marimo` (para abrir o notebook).
+- Dependências em [`requirements.txt`](requirements.txt) — principais: `numpy`, `sympy`,
+  `pandas` e `marimo` (para abrir os notebooks).
 
 Instalação em um ambiente virtual:
 
@@ -46,7 +64,8 @@ Há duas formas, dependendo do que você quer:
 
 ### 1. Visualizar como notebook marimo (interativo)
 
-Com o ambiente ativado e o `marimo` instalado:
+Com o ambiente ativado e o `marimo` instalado (troque `tc4_p1.py` por `tc4_p2.py`
+conforme a parte desejada):
 
 ```bash
 # Modo edição (interativo, abre no navegador)
@@ -63,11 +82,12 @@ marimo run tc4_p1.py
 
 ### 2. Executar apenas o código (sem interface)
 
-O arquivo também roda como um script Python comum. Basta ter todas as dependências
+Os arquivos também rodam como scripts Python comuns. Basta ter todas as dependências
 instaladas (`pip install -r requirements.txt`):
 
 ```bash
 python tc4_p1.py
+python tc4_p2.py
 ```
 
 Isso executa todas as células em sequência e imprime os resultados no terminal, sem
@@ -77,7 +97,8 @@ abrir o navegador.
 
 ```
 CN-TC4/
-├── tc4_p1.py          # notebook marimo com as implementações e os testes
+├── tc4_p1.py          # Parte 1: integração numérica (trapézio e Simpson)
+├── tc4_p2.py          # Parte 2: EDOs (Euler e RK4 — hora da morte)
 ├── requirements.txt   # dependências do projeto
 ├── .gitignore
 └── README.md
